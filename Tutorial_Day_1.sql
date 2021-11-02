@@ -85,6 +85,55 @@ select upper(name) , age , city from emp_details;
 select curdate();
 select day(curdate());
 select now();
+select reverse(name) , age from emp_details;
+select  replace(name, "Ruhul Amin" , "Mohammad Ruhul Amin") from emp_details;
+select * from emp_details;
+select trim(name) from emp_details;
+select city , sum(salary) , count(city) as totalCity from emp_details  group by city; 
+
+show tables;
+create table employees(Emp_ID varchar(10),Emp_Name varchar(10),Age int , 
+	Gender char(1), Doj date, Dept varchar(10), City varchar(10) , Salary float);
+
+insert into employees values("101","Sakib",23,"M","1999-11-3", "IPE","Gazipur",30000),
+							("102","Sajid",22,"M","1997-10-10", "CSE","Dhaka",45000),
+							("103","Nusaiba",33,"F","1993-10-10", "CSE","Khulna",55000),
+							("104","Abdul",44,"M","1995-10-10", "IPE","Barisal",66000),
+							("105","Abul",76,"M","1996-10-10", "ME","Dhaka",40000),
+							("106","Ruhul",27,"M","2001-10-10", "CSE","Gazipur",70000),
+							("107","Aynun",1,"F","2020-10-10", "ME","Gazipur",22000),
+							("108","Mariyam",1,"F","2020-10-10", "ME","Barisal",45000),
+							("109","Ashraful",30,"M","2021-10-10", "EEE","Gazipur",20000),
+							("110","Apon",20,"M","2021-10-10", "ETE","Dhaka",25000),
+							("111","Kumfu",12,"F","1886-10-10", "ECE","Khulna",66000),
+							("112","Panda",55,"F","1996-10-10", "ECE","Khulna",77000);
+                            
+select * from employees; 
+select distinct dept from employees;
+select sum(Salary) as TotalSalary , Gender from employees group by Gender;
+select sum(Salary) as DeptWiseSalary , Dept from employees group by Dept;
+select sum(Salary) as DistrictWiseSalary , city  from employees 
+	where age >20
+    group by city
+    order by DistrictWiseSalary 
+    desc;
+
+select dept as Department , sum(Salary) as TotalSalary , avg(Salary) as averageSalary  from employees
+	where age >=20
+    group by Dept
+    order by TotalSalary desc;
+    
+select dept as Department , round(avg(salary),3) as AvgSalary from employees 
+	where age >= 20 
+    group by Dept
+    order by AvgSalary desc;
+    
+select * from employees;
+select Dept ,count(emp_Name) as Employees from employees group by dept order by Employees desc;
+    
+	
+
+
 
 
 
