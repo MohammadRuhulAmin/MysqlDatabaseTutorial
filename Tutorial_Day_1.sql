@@ -65,27 +65,28 @@ select * from emp_details where sex in ('M','F');
 select * from emp_details where city in ('Dhaka' , 'Rajshahi') and age > 30 and Name = 'Tjp';
 select * from emp_details where age in (40,50) and sex = 'M' or name = 'Tjp';
 select * from emp_details as EmployeeInformation;
-select * from emp_details where doj between "1900-1-1" and "2020-1-1"; 
+select * from emp_details where doj between "1900-1-1" and "2020-1-1";
+select * from emp_details where age>30 and doj between "1900-1-1" and "2020-1-1";
+insert into emp_details values("Fahmida",20,"F","1585-11-1","Kumilla",55000);
+select * from emp_details where sex = 'F';
+select sum(salary) as sum_sal , avg(salary) as avg_sal , sex as EmpSex from emp_details  group by sex;
+select * from emp_details group by city;
+select count(city) as Employee , city from emp_details group by city;
+select * from emp_details;
+select * from emp_details where city = 'Dhaka';
+select count(name) as Employee , city from emp_details group by city;
+select * from emp_details order by city;
+select * from emp_details order by age desc;
+select (110 + 20) as summation;
+select (111-12) as substruct;
+select name as EmployeeName , length(name) lengthOfName  from emp_details;
+select repeat('#',100) as hashInfo;
+select upper(name) , age , city from emp_details;
+select curdate();
+select day(curdate());
+select now();
 
 
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-						
 
 
 
