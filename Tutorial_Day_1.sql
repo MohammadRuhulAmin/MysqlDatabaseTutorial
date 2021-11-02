@@ -130,8 +130,20 @@ select dept as Department , round(avg(salary),3) as AvgSalary from employees
     
 select * from employees;
 select Dept ,count(emp_Name) as Employees from employees group by dept order by Employees desc;
-    
-	
+
+select year(Doj) as JoinYear , count(Emp_ID) TotalEmployee from employees group by JoinYear;
+
+select * from employees;
+
+select Emp_Name , Gender , Age ,doj as DateOfJoin from employees having(year(DateOfJoin)>2020);
+
+select sum(salary) as TotalSalary , round(avg(salary),1)  as AverageSalary , dept as Department
+	from employees
+	group by dept 
+    having(avg(salary)>48000);
+
+
+
 
 
 
