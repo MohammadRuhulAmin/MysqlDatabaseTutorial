@@ -317,9 +317,109 @@ insert into orders values(101,"2021-10-2","2021-9-3","2021-10-1","Shipped","succ
 (109,"2011-10-2","2010-9-3","2010-10-1","onship","processed",109);
 select * from orders;
 drop table orders;
+create table orderdetails(orderNumber int , productCode varchar(30),
+	quantityOrder int , priceEach float , orderLineNumber int );
+
+insert into orderdetails values(109, "Product_110$",30 , 32000, 4),
+	(108, "l-21011",30 , 32000, 3),
+    (107, "D-11011",30 , 32000, 2),
+	(106, "D-33022",30 , 32000, 3),
+    (105, "Product_110$",30 , 32000, 12),
+    (104, "Product_110$",30 , 32000, 6),
+    (103, "D-33023",30 , 32000, 12),
+    (102, "Product_110$",30 , 32000, 11),
+    (101, "Product_110$",30 , 32000, 8),
+    (1010, "P-11011",30 , 32000, 7),
+    (123, "P-13011",30 , 32000, 5);
+drop table orderdetails;
+select * from orderdetails;
+select o.orderDate , o.requiredDate, o.status , o.customerNumber, o.comments , o.status ,
+od.orderNumber , od.productCode, od.quantityOrder , od.priceEach, od.quantityOrder*od.priceEach as TotalCell   from orders 
+	as o
+    inner join orderdetails as od
+    using(orderNumber);
+
+select o.orderDate , o.requiredDate, o.status , o.customerNumber, o.comments , o.status ,
+od.orderNumber , od.productCode, od.quantityOrder , od.priceEach, sum(od.quantityOrder*od.priceEach) as TotalCell   from orders 
+	as o
+    inner join orderdetails as od
+    using(orderNumber)
+    where status !='onship' 
+    and status !='failed'
+    group by status
+    order by TotalCell desc;
+
+
+select * from products;
+select * from orders;
+select * from orderdetails;
+select o.orderNumber , o.customerNumber , o.status , 
+	od.productCode , od.quantityOrder * od.priceEach as totalSell , p.productCode from orders as o
+	inner join orderdetails as od 
+    using (orderNumber) 
+    inner join products as p
+    using(productCode)
+    -- where status !='failed'
+--     and
+--     status !='onship'
+    group by status 
+    order by totalSell desc;
+    
+-- select <field list> from table_a
+-- 	left join table_b 
+--     on a.commonKey = b.commonKey;
+
+select * from orders;
+select * from orderdetails;
+-- inner join
+select * from orders as o
+	inner join orderdetails as od 
+    using(orderNumber);
+
+-- left join
+select * from orders as o
+	left join orderdetails as od 
+    using(orderNumber);
+    
+    -- right join
+select * from orders as o
+	right join orderdetails as od 
+    using(orderNumber);
+
+-- select concat(m.lastname, ', ' ,m.firstname) as manager ,
+-- 	concate(e.lastname, ' , ', e.firstname) as employee 
+--     from manager as m
+--     inner join employees as e
+--     on m.employeeId = e.employeeId
+--     order by joinDate desc;
+--     
+
+    
+-- FULL Join
+-- select <field list> from table_a as a
+-- 	full outer join table_b as b
+--     using(commonkey);
+
+-- Example : 
+		-- select c.customername , 
+-- 		   o.ordernumber from customers as c left join
+--         orders as o 
+--         on c.customernumber  = o.customernumber
+--         union 
+--         select c.customername,
+--         o.ordernumber from customers as c right join 
+--         orders as o
+--         on c.customernumber = o.customernumber;
+-- tutorial at : 2:09:09  
 
 
 
+
+
+
+
+	
+	
 
 
 
