@@ -206,6 +206,125 @@ select dept as department , round(avg(salary),3) as avgSal from employees
 	group by department
     having(avgSal>3000);
 
+-- sqlJoin inner join
+	-- select <field list> from table a 
+	-- inner join table b 
+	-- on a.key = b.key
+
+create database sql_joins;
+show databases;
+use sql_joins;
+create table cricket (cricket_id int auto_increment , name varchar(30) , primary key(cricket_id));
+create table football(football_id int auto_increment , name varchar(30), primary key(football_id));
+insert into cricket (name) 
+	values('Ruhul'),('Sakib'),('Aynun'),('Sajid'),('Affan');
+    select * from cricket;
+insert into football (name) 
+	values('Ruhul'),('Saad'),('Aynun'),('Sakhawat'),('Affan');
+    select * from cricket;
+    select * from football;
+    
+-- sqlJoin inner join
+	-- select <field list> from table a 
+	-- inner join table b 
+	-- on a.key = b.key
+
+select * from cricket inner join  football	
+	on cricket.name = football.name;
+    
+select * from cricket as c inner join football as f
+	on c.name = f.name;
+    
+-- create table football(football_id int auto_increment , name varchar(30), primary key(football_id));
+
+create table basketball(basketball_id int auto_increment , name varchar(30) , primary key(basketball_id));
+create table tabletenis(tabletenis_id int auto_increment , name varchar(30), 
+contact varchar(11),address varchar(30), primary key(tabletenis_id));
+
+insert into basketball(name)
+	values("Sakib"),("Sajid"),("Aynun"),("Ruhul"),("Ashraful"),("Affan");
+insert into tabletenis (name, contact, address)
+	values("Sakib","01521433840","Dhaka"),
+			("Ruhul","01322352864","Rajshahi"),
+            ("Aynun","01715316183","Uttara");
+	
+select * from tabletenis;
+select * from basketball as b inner join 
+	tabletenis as t 
+    on b.name = t.name;
+select    contact , address , tabletenis_id from tabletenis
+	as t 
+    inner join basketball as b
+    on 
+    t.name = b.name;
+
+select c.cricket_id , c.name , f.football_id , f.name 
+	from cricket as c 
+    inner join football as f
+    on c.name = f.name;
+
+select c.cricket_id , f.football_id , c.name , f.name
+	from cricket as c
+    inner join football as f
+    on c.name = f.name;
+
+-- select orderDate , ShipperID , c.CustomerID , c.CustomerName,c.ContactName from orders as o
+-- 	inner join Customers as c
+--     on o.CustomerID = c.CustomerID;
+
+create table products(productCode varchar(20), productName varchar(20),
+	productLine varchar(20), productScale varchar(20), productVendor varchar(20),
+	productDescription varchar(20));
+
+insert into products values("l-11011","Laptop","MotorCycle","1:20", "Synasis IT","Laptop HP i7"),
+	("l-21011","Laptop","Cycle","1:30", "Ryans IT","Laptop Lenovo i7"),
+    ("D-11011","Desktop","Car","2:20", "Desk IT","Desktop Intel i7"),
+    ("D-33022","Desktop","MotorCycle","1:20", "Synasis IT","Desktop Salaron D"),
+    ("P-11011","Printer","Truck","1:20", "Synasis IT","Color Printer"),
+	("P-13011","Printer","Truck","1:20", "Ryans IT","black&white printer");
+
+select * from products;
+create table productlines(productLine varchar(20), textDescription varchar(20));
+insert into productlines values("Cycle", "very slow"),
+								("Truck", "Strong to take"),
+                                ("MotorCycle", "very fast"),
+                                ("Car","luxary");
+select * from productlines;
+
+
+select p.productCode , p.productName, p.productVendor , p.productLine ,
+	pl.textDescription from products as p
+    inner join productlines as pl
+    on p.productLine = pl.productLine;
+	
+select p.productCode , p.productName, p.productVendor , p.productLine ,
+	pl.textDescription from products as p
+    inner join productlines as pl
+    using(productline);
+
+create table orders(orderNumber int , orderDate date , requiredDate date ,
+		shippedDate date , status varchar(10), comments varchar(10), customerNumber int);
+
+insert into orders values(101,"2021-10-2","2021-9-3","2021-10-1","Shipped","success",100),
+(1010,"2021-10-2","2021-9-3","2021-10-1","Shipped","success",101),
+(102,"2033-10-2","2019-9-3","2021-10-1","failed","failed",102),
+(103,"2027-10-2","2018-9-3","2011-10-1","onship","processed",103),
+(104,"2015-10-2","2016-9-3","2020-10-1","Shipped","success",104),
+(105,"2014-10-2","2015-9-3","2024-10-1","failed","failed",105),
+(106,"2013-10-2","2017-9-3","2013-10-1","Shipped","success",106),
+(107,"2012-10-2","2023-9-3","2012-10-1","Shipped","success",107),
+(108,"2022-10-2","2022-9-3","2011-10-1","onship","processed",108),
+(109,"2011-10-2","2010-9-3","2010-10-1","onship","processed",109);
+select * from orders;
+drop table orders;
+
+
+
+
+
+
+
+
 
 
 
