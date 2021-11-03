@@ -130,19 +130,81 @@ select dept as Department , round(avg(salary),3) as AvgSalary from employees
     
 select * from employees;
 select Dept ,count(emp_Name) as Employees from employees group by dept order by Employees desc;
-
 select year(Doj) as JoinYear , count(Emp_ID) TotalEmployee from employees group by JoinYear;
-
 select * from employees;
-
 select Emp_Name , Gender , Age ,doj as DateOfJoin from employees having(year(DateOfJoin)>2020);
-
 select sum(salary) as TotalSalary , round(avg(salary),1)  as AverageSalary , dept as Department
 	from employees
 	group by dept 
-    having(avg(salary)>48000);
+    having(avg(salary)>48000);    
 
+select * from employees;
+select Emp_Name , Age, Gender , year(doj) as Doj  from employees where age>20 having(Doj>1995) order by age desc;
+show databases;
+use sql_intro;
+select sum(Age) as Age , dept from employees group by dept having(length(dept)>2) order by age desc;
 
+select emp_name , age, gender ,doj from employees 
+	where age > 30
+	having (length(emp_name)>5)  order by age desc;
+
+show databases;
+use sql_intro;
+show tables;
+select * from employees;
+create table sales (product_id int , sell_price float , quantity int, state varchar(20));
+insert into sales values(121,320.0,3,'Dhaka'),
+						(122,340.0,34,'Rajshahi'),
+                        (123,420.0,332,'Khulna'),
+                        (121,320.0,32,'Rajshahi'),
+                        (123,720.0,31,'Dhaka'),
+                        (122,420.0,34,'Khulna');
+					
+				select * from sales;
+                
+select product_id, sum(sell_price *quantity) as  revenue , state from sales 
+	group by state order by revenue desc;
+
+create table cost_product(product_id int, cost_price float);
+insert into cost_product values(121,270.0),(123,270.0),(122,270.0);
+select * from cost_product;
+select c.product_id , sum((s.sell_price - c.cost_price) * s.quantity) from sales as s  
+	inner join cost_product as c 
+    where s.product_id = c.product_id 
+    group by c.product_id;
+
+show tables;
+select * from sales;
+select * from cost_product;
+
+select c.product_id , sum((s.sell_price -c.cost_price) *s.quantity) 
+	from sales as s
+    inner join cost_product as c
+    where s.product_id = c.product_id
+    group by c.product_id;
+
+select * from employees;
+select count(emp_id) as employees , city from employees 
+	group by city
+    having(count(city)>2);
+
+select city , sum(salary) as totalSalary from employees 
+		group by city
+        having(totalSalary>111000);
+
+select count(emp_id) as totalEmployees , dept as Department from employees
+	group by dept 
+    having(totalEmployees>0)
+    order by Department desc;
+
+select dept as department,count(emp_id)as totalEmployees from employees
+	where dept !='ME'
+    group by dept
+    having(count(department)>=2);
+
+select dept as department , round(avg(salary),3) as avgSal from employees
+	group by department
+    having(avgSal>3000);
 
 
 
