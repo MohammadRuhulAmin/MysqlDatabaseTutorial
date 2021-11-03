@@ -412,12 +412,57 @@ select * from orders as o
 --         on c.customernumber = o.customernumber;
 -- tutorial at : 2:09:09  
 
+-- sub query Tutorial
+show databases;
+use sql_joins;
+show tables;
+show tables;
+use sql_intro;
+show tables;
+select * from employees order by salary desc;
 
-
-
-
-
-
+-- write a sql query to display department with maximum salary from employees table
+	select dept from employees 
+    where salary = (select max(salary) from employees ); 
+    select max(salary) from employees;
+    select emp_name from employees 
+		where salary = (select max(salary) from employees);
+	select emp_name , dept ,salary from employees	
+		where salary = (select max(salary) from employees);
+	select emp_name ,dept, salary from employees
+		where salary = 
+			(select min(salary) from employees);
+	
+    select sum(salary) as avg_salary , dept as department	
+		from employees
+        group by department 
+        order by avg_salary;
+	
+    select avg(salary) from employees ;
+    
+    select * from employees where salary < (
+		select avg(salary) from employees
+    );
+    
+    use sql_intro;
+    show tables;
+    select * from cost_product;
+    show tables;
+    create table products(product_id int, p_name varchar(20) , sell_price float , p_type varchar(10));
+    insert into products values(101,"Mobile",55000,"Luxury"),
+    (102,"Telephone",48000,"Non Luxury"),
+    (103,"Camera",95000,"Luxury"),
+    (104,"Laptop",77000,"Non Luxury");
+    select * from products;
+    create table orders(order_id int , product_sold varchar(20), selling_price float);
+		insert into orders (select product_id , p_name , sell_price from products where sell_price>48000);
+    select * from orders;
+    
+    
+    
+    
+    
+	
 	
 	
 
