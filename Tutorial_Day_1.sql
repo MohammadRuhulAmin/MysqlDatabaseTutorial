@@ -457,30 +457,252 @@ select * from employees order by salary desc;
     create table orders(order_id int , product_sold varchar(20), selling_price float);
 		insert into orders (select product_id , p_name , sell_price from products where sell_price>48000);
     select * from orders;
+    use sql_intro;
+    show tables;
+    select * from employees order by salary desc;
+    select dept from employees where salary = (
+		select Max(salary) from employees
+    );
+    select * from employees where salary <(
+		select avg(salary) from employees
+    );
     
-    
-    
-    
+    create table students(stu_name varchar(30), stu_class int , stu_roll int , stu_contact varchar(30), stu_year date);
+    select * from students;
+    insert into students values("Ruhul Amin", 12 , 10 , "01322352864","2015-10-3"),
+								("Sakib Hasan", 11 , 9 , "0175","2014-10-3"),
+								("Aynun Jariya", 1 , 1 , "0132864","2013-10-3"),
+								("Ashraful Islam", 12 , 1 , "22352864","2012-10-3"),
+								("Rashmi", 12 , 1 , "013223","2011-10-3"),
+								("Affan", 12 , 2 , "352864","2010-10-3"),
+								("Ammar", 12 , 3 , "322352864","2009-10-3"),
+								("Atiqul Alom", 6 , 2 , "013252864","2008-10-3"),
+								("Atikur Rahman", 5 , 1 , "0122352864","2055-10-3"),
+								("Sadman Sakib", 7 , 1 , "022352864","2005-10-3"),
+								("Sajid", 12 , 3 , "01352864","2020-10-3"),
+								("Saifullah", 11 , 11 , "322352864","2021-10-3"),
+								("Oliullah", 5, 11 , "22352864","2022-10-3"),
+								("Al Amin", 2 , 12 , "013223524","2023-10-3"),
+								("Mohibur Rahman", 12 , 10 , "22352864","2015-10-3");
     
 	
+	select * from students;
+    create table inviteStudents(stu_name varchar(30), stu_class int , stu_roll int, stu_contact varchar(30));
+    select * from inviteStudents;
+    insert into inviteStudents(
+		select stu_name , stu_class , stu_roll , stu_contact from students where stu_roll<=2
+    );
+   --  drop table inviteStudents;
+   
+
+    select stu_class , stu_roll from inviteStudents where stu_roll = 1;
+ -- #update 
+-- 	update students 
+--     set stu_class = stu_class + 1  
+--     where   stu_roll in(select stu_roll from students where stu_roll <=1 );
+--     
+-- #Delete
+	-- delete from table_name where operator value (inner query)
+	select * from students;
+    select * from invitestudents;
 	
-	
+	-- delete from students 
+-- 		where stu_roll >10;
+-- select * from invitestudents where stu_roll<=2;
+
+delete from students 
+	where stu_roll in(
+		select stu_roll from invitestudents where stu_roll =2
+    );
+    
+    
+select * from students
+	where stu_roll in (
+		select stu_roll from invitestudents where stu_roll <=2
+    );
+    
+select * from students 
+	where stu_contact in (
+		select stu_contact from invitestudents where length(stu_contact)>=8
+    );
+select stu_contact from invitestudents where length(stu_contact)>=8;
+
+show databases;
+use sql_joins;
+show tables;
+select * from cricket;
+
+#triggers_Create
+
+-- Create Trigger 
+-- 	trigger_name trigger_time
+--     trigger_event
+--     on table_name for each row 
+--     Begin
+--     ....
+--     End;
+
+-- Trigger_time => Before , After
+-- Trigger_event => Insert , Update , Delete
+
+create database triggers;
+use triggers;
+show tables;
+
+#before insert trigger
+create table customers(
+	cust_id int , age int, 
+    name varchar(30)
+);
+
+-- #delimiter is a marker
+delimiter //
+create trigger age_verify 
+	before insert on customers 
+    for each row 
+    if new.age< 0
+    then set new.age = 0;
+    end if;//
+insert into customers values(101,-30,"Ruhul Amin"),
+							(101,30,"Ruhul Amin"),
+							(101,-0,"Ruhul Amin"),
+							(101,-10,"Ruhul Amin"),
+							(101,110,"Ruhul Amin"),
+							(101,120,"Ruhul Amin"),
+							(101,210,"Ruhul Amin");
+
+select * from customers;
+show databases;
+select * from customers;
+
+create database practiseTrigger;
+use practisetrigger;
+
+create table coders(
+	code_id int,
+    rank_pt float,
+	name varchar(30),
+    email varchar(100),
+    contact varchar(100),
+    institute varchar(100)
+);
+
+drop table coders;
+delimiter //
+create trigger verifyRankPt
+	before insert on coders
+		for each row
+		if new.rank_pt<3.00 and new.code_id<0
+        then set new.email = "You are not allowed" , new.code_id = 0;
+        end if;//
+  
+  insert into coders values(
+	-111 , 2.30 ,"Ruhul AMin","testing ","12333","AIUB" 
+  );
+
+#after insert trigger
+
+create table teachers(
+	id int auto_increment primary key,
+    name varchar(40) not null , 
+    email varchar(30),
+    birthdate date
+);
+create table message(
+	id int auto_increment,
+    messageId int ,
+    message varchar(300) not null,
+    primary key (id,messageId)
+);
+Delimiter //
+	create trigger verifyDob
+    after insert on teachers
+    for each row
+		begin
+			if new.birthdate is null 
+			then
+			insert into message(messageId, message)
+			values(new.id, concat('HI', new.name, ' please update birthdate'));
+            end if;
+		end //
+
+insert into teachers(name,email,birthdate)
+	values("Team Bravo","bravo@gmail.com",NULL);
+select * from teachers;
+select * from message;
+
+create table orders(
+	id int ,
+    customer_name varchar(30),
+    order_id varchar(30)
+);
+create table orderMessages(
+	id int ,
+    messageId int,
+    orderId varchar(30),
+    messageDetails varchar(300)
+);
+show tables;
+insert into orders(id,customer_name) values(101,"Sakib Hasan");
+delimiter //
+create trigger verifyOrder 
+	after insert on orders
+    for each row 
+    Begin
+		if order_id is null 
+		then 
+		insert into orderMessages values(101,202,"Invalid order ", "The order is invalid please try again");
+		end if; 
+    end//
+    drop table orders;
+select * from orders;
 
 
+delimiter //
+	create trigger checkOrderId
+    after insert on orders
+    for each row 
+    Begin
+		if new.customer_name is null
+		then set new.customer_name = "Name is not Inserted";
+		end if;
+end //	
+
+-- #########################################
+	-- before update 
+--     delimiter //
+--     create trigger update_trigger
+--     before update
+--     on employees
+--     for each row
+--     begin
+-- 		if 
+-- 			new.salary = 10000
+-- 		then
+-- 			set new.salary = 25000;
+-- 		elseif
+-- 			new.salary <10000
+-- 				set new.salary = 10000;
+-- 		end if;
+--         end // 
+-- 	delimiter;
+        
+-- #########################################
+
+#before delete
+-- delimiter $$
+-- 	create trigger salary_delete
+--     before delete 
+--     on salary
+--     for each row
+--     begin 
+--     insert into salarydel(eid,validform,amount) 
+-- 		values(old.eid,old.validform,old.amount)
+-- 	end $$
+--     delimiter
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
 
